@@ -12,7 +12,6 @@ class Game
 	private://:::::Variables::::://
 		string name1, name2;
 		int row, col;
-		//int boardNum[3][3];
         char board[3][3];
         int turn, score;
 		
@@ -25,7 +24,6 @@ class Game
 			    for(int j=0;j<3;j++)
 			    {
 				    board[i][j]='-';
-				    //boardNum[i][j]=0;
 				}
 			turn=0;
 			row=col=-1;
@@ -41,7 +39,6 @@ class Game
 			    for(int j=0;j<3;j++)
 			    {
 				    board[i][j]='-';
-				    //boardNum[i][j]=0;
 				}
 			turn=0;
 			row=col=-1;
@@ -76,9 +73,8 @@ class Game
 			}
 
 			cout<<endl<<"You're all set!";
-			Sleep(2000);
+			Sleep(2000);//I thought too much text at once is confusing for the player, so I put some time before the game actually starts
 			cout<<endl<<endl<<endl;
-			//startGame();
 		}
 		//::::::::::::::::::::::::::::::::::::::::::::::::::::::://
         
@@ -97,7 +93,7 @@ class Game
 				if(turn!=0)
 			    	cout<<"last turn - "<<name1<<": "<<row<<","<<col<<endl;
 				break;
-			default:cout<<"Error: could not identify turn"<<endl;
+			default:cout<<"Error: could not identify turn"<<endl;//this is to make it easier for me to know where a problem is occuring
 			}
 			printBoard();
 		}
@@ -152,11 +148,9 @@ class Game
 			{
 			case 0:
 				board[row][col]='X';
-				//boardNum[row][col]=1;
 				break;
 			case 1:
 				board[row][col]='O';
-				//boardNum[row][col]=-1;
 				break;
 			default:cout<<"Error: could not overwrite board."<<endl;
 			}
@@ -215,29 +209,34 @@ class Game
 		        	cout<<name2<<" wins!";
 					return true;
 				}
-				else if(fullboard())
+				else if(fullboard()) //Tie
 				{
 					cout<<"Board full, no possible moves left. It's a tie!";
 					return true;
 				}
-				else
+				else //Game is continued
 				{
 					return false;
 				}
 		}
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 		
-		void AI() // AI
+		//::::::::::::::::::CPU, calls calc():::::::::::::::::://
+		void AI() // "AI"
 		{
+			//If an almost-win is not detected, put mark in random slot
 			if(!calc())
 			{
 			    srand (time(NULL));
 			    do{
 			    row=rand() % 3 ;
 			    col=rand() % 3 ;
-		        }while(board[row][col]!='-');//places mark in random slot
+		        }while(board[row][col]!='-');
 			}
 		}
+		//::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 		
+		//::::::::::::Checks almost-wins by the user, blocks it:::::::::::://
 		bool calc()
 		{
 			
@@ -369,7 +368,7 @@ int main()
 		TTT.input();
 	}while(TTT.checkWin()==false&&TTT.fullboard()==false);
     TTT.printBoard();
-    cout<<endl<<"Would you like to play again? (y/n): ";
+    cout<<endl<<"Would you like to play again? (y/n): ";//allows player to do a rematch without restarting program
     cin>>ans;
     while(ans!='y'&&ans!='Y'&&ans!='n'&&ans!='N'){
     cout<<"Invalid response, please enter (y)es or (n)o: ";
