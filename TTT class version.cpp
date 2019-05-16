@@ -377,4 +377,3 @@ int main()
     }while(ans=='y'||ans=='Y');
 	return 0;
 }
-
